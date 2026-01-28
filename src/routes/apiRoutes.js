@@ -27,6 +27,34 @@ router.get('/dishes', (req, res) => {
   });
 });
 
+// GET (Read One)
+router.get('/dishes/:id', (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  if (Number.isNaN(id)) {
+    return res.status(400).json({
+      status: 400,
+      message: 'Bad Request: id must be a number',
+      data: []
+    });
+  }
+
+  const item = data.find(d => d.id === id);
+
+  if (!item) {
+    return res.status(404).json({
+      status: 404,
+      message: `Dish with ID ${id} not found`,
+      data: []
+    });
+  }
+
+  return res.status(200).json({
+    status: 200,
+    message: 'Retrieved dish successfully',
+    data: item
+  });
+});
+
 // 2) POST (Create)
 router.post('/dishes', (req, res) => {
   const { name, price, category, isVegetarian } = req.body || {};
