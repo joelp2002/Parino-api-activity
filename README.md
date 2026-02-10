@@ -21,6 +21,19 @@
   **Answer:**  
   `404 Not Found` clearly tells the client that the requested resource does not exist (e.g., dish ID not found). This is better than returning an empty array because it avoids confusion and helps developers or client applications handle errors properly.
 
+
+  
+## Activity 3: Advanced Data Modeling
+
+### 1. Why did I choose to Embed the Reviews?
+- Because reviews are short and belong strictly to that dish.
+- Reviews are not used independently from the dish.
+
+### 2. Why did I choose to Reference the Chef?
+- Because a Chef exists even if they aren't cooking.
+- Multiple dishes can share one Chef.
+
+
 ## Testing
 
 ### Server Running Successfully
