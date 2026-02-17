@@ -1,7 +1,7 @@
 // src/controllers/chefController.js
 const Chef = require('../models/chefModel');
 
-// ✅ GET ALL CHEFS
+// GET ALL CHEFS
 const getAllChefs = async (req, res) => {
   try {
     const chefs = await Chef.find();
@@ -11,7 +11,7 @@ const getAllChefs = async (req, res) => {
   }
 };
 
-// ✅ CREATE A CHEF
+// CREATE A CHEF
 const createChef = async (req, res) => {
   try {
     const chef = new Chef({
@@ -25,7 +25,7 @@ const createChef = async (req, res) => {
   }
 };
 
-// ✅ GET CHEF BY ID
+// GET CHEF BY ID
 const getChefById = async (req, res) => {
   try {
     const chef = await Chef.findById(req.params.id);
@@ -38,7 +38,7 @@ const getChefById = async (req, res) => {
   }
 };
 
-// ✅ UPDATE CHEF
+// UPDATE CHEF
 const updateChef = async (req, res) => {
   try {
     const chef = await Chef.findByIdAndUpdate(
@@ -55,7 +55,7 @@ const updateChef = async (req, res) => {
   }
 };
 
-// ✅ DELETE CHEF
+// DELETE CHEF
 const deleteChef = async (req, res) => {
   try {
     const chef = await Chef.findByIdAndDelete(req.params.id);
