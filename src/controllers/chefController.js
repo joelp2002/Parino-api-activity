@@ -1,7 +1,7 @@
 
 const Chef = require('../models/chefModel');
 
-//  GET ALL CHEFS
+// GET ALL CHEFS
 const getAllChefs = async (req, res) => {
   try {
     const chefs = await Chef.find();
@@ -25,7 +25,7 @@ const createChef = async (req, res) => {
   }
 };
 
-//GET CHEF BY ID
+// GET CHEF BY ID
 const getChefById = async (req, res) => {
   try {
     const chef = await Chef.findById(req.params.id);
@@ -38,7 +38,7 @@ const getChefById = async (req, res) => {
   }
 };
 
-//UPDATE CHEF
+// UPDATE CHEF
 const updateChef = async (req, res) => {
   try {
     const chef = await Chef.findByIdAndUpdate(

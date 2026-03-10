@@ -9,7 +9,7 @@ const dishSchema = new mongoose.Schema({
   price: {
     type: Number,
     required: true,
-    min: 0 
+    min: 0 // Price cannot be negative (validation)
     
   },
   category: {
@@ -21,7 +21,7 @@ const dishSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  //ADDED: Embedded Reviews 
+  // Embedded Reviews
   reviews: [
   {
     user: String,
@@ -29,7 +29,7 @@ const dishSchema = new mongoose.Schema({
     comment: String
   }
 ],
-  //ADDED: Referenced Chef 
+  // Referenced Chef 
   chef: {
   type: mongoose.Schema.Types.ObjectId,
   ref: 'Chef'
