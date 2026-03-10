@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-// Import the Controller
+// Import the middleware
+const { protect, authorize } = require('../../middleware/authMiddleware');
+
+// Import the Controllers
 const {
   getAllDishes,
   createDish,
@@ -18,26 +21,26 @@ const {
   deleteChef,
 } = require('../controllers/chefController'); 
 
-// 1. If user goes to GET / (Show menu) → Ask Chef to getAllDishes
+// ========== DISH ROUTES ==========
+
+// Public routes - anyone can access (no token needed)
 router.get('/dishes', getAllDishes);
-
-// 2. If user sends POST / (New Order) → Ask Chef to createDish
-router.post('/dishes', createDish);
-
-// 3. If user goes to GET /:id (Ask for specific meal) → Ask Chef to getDishById
 router.get('/dishes/:id', getDishById);
 
-// 4. If user sends PUT /:id (Change meal) → Ask Chef to updateDish
-router.put('/dishes/:id', updateDish);
+// Protected routes - require authentication and proper roles
+router.post('/dishes', protect, authorize('admin', 'manager'), createDish);
+router.put('/dishes/:id', protect, authorize('admin', 'manager'), updateDish);
+router.delete('/dishes/:id', protect, authorize('admin'), deleteDish);
 
-// 5. If user sends DELETE /:id (Cancel meal) → Ask Chef to deleteDish
-router.delete('/dishes/:id', deleteDish);
+// ========== CHEF ROUTES ==========
 
-
-//chef routes
+// Public routes - anyone can view chefs
 router.get('/chefs', getAllChefs);
-router.post('/chefs', createChef);
 router.get('/chefs/:id', getChefById);
-router.put('/chefs/:id', updateChef);
-router.delete('/chefs/:id', deleteChef);
+
+// Protected routes - only admins can modify chef data
+router.post('/chefs', protect, authorize('admin'), createChef);
+router.put('/chefs/:id', protect, authorize('admin'), updateChef);
+router.delete('/chefs/:id', protect, authorize('admin'), deleteChef);
+
 module.exports = router;

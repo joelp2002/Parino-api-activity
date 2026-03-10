@@ -44,3 +44,28 @@
 
 ### GET Dish by ID
 ![GET Dish by ID](screenshots/get-dish-by-id.png)
+
+
+## Security Implementation Answers
+
+### 1. Authentication vs Authorization:
+**Authentication** is verifying who the user is. In our code, this happens in the `protect` middleware when we verify the JWT token and find the user. It answers "Are you who you say you are?"
+
+**Authorization** is determining what the user can do. In our code, this happens in the `authorize` middleware when we check if the user's role (user, admin, manager) is allowed to access a route. It answers "What are you allowed to do?"
+
+### 2. Security (bcrypt):
+We used bcryptjs instead of saving plain text passwords because:
+- If the database is breached, plain text passwords would be exposed
+- bcrypt hashes passwords using a one-way encryption algorithm
+- It includes salting (random data added to the hash) to prevent rainbow table attacks
+- Even if two users have the same password, their hashes will be different
+- The hashing process is intentionally slow to prevent brute force attacks
+
+### 3. JWT Structure:
+When the protect middleware receives a JWT from the client, it:
+1. Extracts the token from the Authorization header (removing the 'Bearer ' prefix)
+2. Verifies the token using the JWT_SECRET to ensure it hasn't been tampered with
+3. Decodes the payload to get the user ID and role
+4. Fetches the user from the database using the ID (excluding the password)
+5. Attaches the user object to the request (req.user) for use in subsequent middleware
+6. If any step fails, it returns a 401 Unauthorized error
